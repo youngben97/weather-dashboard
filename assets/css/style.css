@@ -1,0 +1,29 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: skyblue;
+}
+
+header {
+    background-color: aliceblue;
+}
+
+hr {
+    border-top: 3px dashed whitesmoke;
+
+}
+
+.box {
+    background-color: darkblue;
+    height: 200px;
+}
+
+.box.city-info { 
+    background-color: whitesmoke;
+    height: 200px;
+}
+/* .custom-container {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 5%;
+    margin-right: 0;
+} */
