@@ -7,7 +7,10 @@ let date = [6];
 let temp = [6];
 let humidity = [6];
 let wind = [6];
-let indices = [0,1,2,3,4,5]
+//openweather api's list array (which contains forecasts) returns data for every three hours,
+//so to get weather for all five days we must jump to specific points in the array
+// using these indices
+let indices = [0,7,15,23,31,39]
 
 //search elements
 const searchFormEl = document.getElementById("search-form")
@@ -134,6 +137,7 @@ function printWeather(data) {
 
     for (let i=0; i<6; i++) {
         date[i] = new Date(data.list[indices[i]].dt * 1000);
+        console.log('dates' + date[i])
         temp[i] = data.list[indices[i]].main.temp;
         humidity[i] = data.list[indices[i]].main.humidity;
         wind[i] = data.list[indices[i]].wind.speed;
@@ -148,6 +152,7 @@ function printWeather(data) {
         const formattedDate = formatDate(date[i]);
         const fahrenheitTemp = kelvinToFahrenheit(temp[i]);
         dateElements[i].textContent = formattedDate;
+        console.log(formattedDate)
         iconElements[i].setAttribute("src", `https://openweathermap.org/img/wn/${data.list[i].weather[0].icon.toLowerCase()}@2x.png`);
         tempElements[i].textContent = "Temperature: " + fahrenheitTemp + "°F";
         humidityElements[i].textContent = "Humidity: " + humidity[i] + "%";
