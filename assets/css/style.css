@@ -12,15 +12,30 @@ hr {
 
 }
 
+.full-viewport {
+    height: 100vh; /* 100% of the viewport height */
+    width: 100vw; /* 100% of the viewport width */
+    margin: 0;     /* Remove margins */
+    padding: 0;    /* Remove padding */
+  }
+
 .box {
+    color: white;
     background-color: darkblue;
     height: 200px;
 }
 
 .box.city-info { 
+    color: black;
     background-color: whitesmoke;
     height: 200px;
 }
+
+ol, ul {
+    list-style: none outside none;
+}
+
+
 /* .custom-container {
     padding-left: 0;
     padding-right: 0;
