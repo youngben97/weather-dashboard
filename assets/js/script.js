@@ -1,15 +1,18 @@
 //variables and fixed arrays
+
+//apiKey
 const apiKey = 'e6e9bc39b9086aef91505bad03359ad1';
+//variable for city name
 let cityString;
+//array
 let cities = [];
-let cityHistory =[];
+//arrays for date, temp, humidity, wind. limited to six because we are only forecasting for six days
 let date = [6];
 let temp = [6];
 let humidity = [6];
 let wind = [6];
 //openweather api's list array (which contains forecasts) returns data for every three hours,
-//so to get weather for all five days we must jump to specific points in the array
-// using these indices
+//so to get weather for all five days we must jump to specific points in the array using these indices
 let indices = [0,7,15,23,31,39]
 
 //search elements
@@ -86,6 +89,7 @@ function kelvinToFahrenheit(kelvin) {
 };
 
 
+//make fetch request to openweather's geolocation api, get latitude and longitude, call searchWeatherApi()
 function searchApi(cityString) {
 
     const geoApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityString}&appid=${apiKey}`;
@@ -110,6 +114,7 @@ function searchApi(cityString) {
   });
 }
 
+//make fetch request to openweather api's five-day forecast, call printWeather()
 function searchWeatherApi(latitude, longitude) {
 
     const weatherApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
@@ -131,6 +136,10 @@ function searchWeatherApi(latitude, longitude) {
       });
 };
 
+//set cityName to user's input, iterates over the list objects at the points we specify with indices and fills the arrays with respective data
+//then pushes data to cities array
+//then formats date and temp before iterating over the dateElements, tempElements, humidityElements, windElements, iconElements arrays
+//with each iteration sets the textContent of the element to the corresponding value from the object
 function printWeather(data) {
     let name = data.city.name;
     cityName.textContent = name;
@@ -160,8 +169,12 @@ function printWeather(data) {
     }
 }
 
+//get all stored citystrings
 var citiesSearched = JSON.parse(localStorage.getItem("citiesSearched")) || [];
 
+//clear searchHistory, iterate over the length of citiesSearched
+// for each city name, create a button, set value to city's name, set button text to city;
+//add event listener to each button that calls searchApi upon click
 function printHistory () {
     searchHistory.innerHTML = '';
     for (let i = 0; i < citiesSearched.length; i++) {
@@ -184,11 +197,15 @@ function printHistory () {
     }
 };
 
+//update localstorage, then printHistory.
 function updateHistory() {
     localStorage.setItem('citiesSearched', JSON.stringify(citiesSearched));
     printHistory();
 }
 
+//search button handler. upon click call searchApi and pass cityString and callback function.
+//if array length is greater than 5, remove last element from array. then add cityString to the front of the array.
+//then call printHistory and updateHistory
 function handleSearchFormSubmit(event) {
     event.preventDefault();
     console.log("Button pressed")
@@ -214,6 +231,8 @@ function handleSearchFormSubmit(event) {
 
 }
 
+//call printHistory upon page load
 printHistory();
 
+//add event listener to search button
 searchFormEl.addEventListener('submit', handleSearchFormSubmit);
